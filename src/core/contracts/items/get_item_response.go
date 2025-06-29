@@ -1,6 +1,7 @@
 package items
 
 import (
+	"item-detail-api/src/core/entities/categories"
 	entity "item-detail-api/src/core/entities/items"
 	"item-detail-api/src/core/entities/products"
 	"item-detail-api/src/core/entities/providers"
@@ -20,15 +21,21 @@ type GetItemResponse struct {
 }
 
 type ProductResponse struct {
-	ID          string  `json:"id"`
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-	ImageURL    string  `json:"image_url"`
-	CategoryID  string  `json:"category_id"`
+	ID          string           `json:"id"`
+	Name        string           `json:"name"`
+	Price       float64          `json:"price"`
+	Description string           `json:"description"`
+	ImageURL    string           `json:"image_url"`
+	CategoryID  string           `json:"category_id"`
+	Category    CategoryResponse `json:"category"`
 }
 
 type ProviderResponse struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type CategoryResponse struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 }
@@ -41,6 +48,14 @@ func toProductResponse(p products.Product) ProductResponse {
 		Description: p.Description,
 		ImageURL:    p.ImageURL,
 		CategoryID:  p.CategoryID.String(),
+		Category:    toCategoryResponse(p.Category),
+	}
+}
+
+func toCategoryResponse(c categories.Category) CategoryResponse {
+	return CategoryResponse{
+		ID:   c.ID.String(),
+		Name: c.Name,
 	}
 }
 

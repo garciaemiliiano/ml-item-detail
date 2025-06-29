@@ -1,6 +1,7 @@
 package reviews
 
 import (
+	"item-detail-api/src/core/entities/products"
 	"item-detail-api/src/repositories/basemodel"
 
 	"github.com/google/uuid"
@@ -8,10 +9,11 @@ import (
 
 type ReviewDAO struct {
 	basemodel.BaseModel
-	Description string    `gorm:"column:description"`
-	Rating      int       `gorm:"column:rating"`
-	ProductID   uuid.UUID `gorm:"column:product_id"`
-	UserID      uuid.UUID `gorm:"column:user_id"`
+	Description string           `gorm:"column:description"`
+	Rating      int              `gorm:"column:rating"`
+	ProductID   uuid.UUID        `gorm:"column:product_id"`
+	UserID      uuid.UUID        `gorm:"column:user_id"`
+	Product     products.Product `gorm:"foreignKey:ProductID;references:ID"`
 }
 
 func (ReviewDAO) TableName() string {

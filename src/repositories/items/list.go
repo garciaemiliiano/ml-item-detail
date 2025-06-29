@@ -37,7 +37,7 @@ func (r ItemRepository) List(ctx context.Context, config provider.ListConfig) ([
 	}
 
 	if config.WithDetails {
-		q = q.Preload("Product").Preload("Provider")
+		q = q.Preload("Product.Category").Preload("Provider")
 	}
 
 	q = q.Limit(config.Limit).Offset(config.Offset)
