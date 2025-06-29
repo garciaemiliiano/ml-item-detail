@@ -14,5 +14,6 @@ type Product struct {
 	Name        string
 	Price       float64
 	Description string
+	ImageURL    string
 	CategoryID  uuid.UUID
 }
