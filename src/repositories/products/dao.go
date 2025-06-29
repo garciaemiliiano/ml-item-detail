@@ -10,7 +10,7 @@ import (
 type ProductDAO struct {
 	basemodel.BaseModel
 	Name        string                 `gorm:"column:name"`
-	Price       int                    `gorm:"column:price"`
+	Price       float64                `gorm:"column:price"`
 	Description string                 `gorm:"column:description"`
 	CategoryID  uuid.UUID              `gorm:"column:category_id"`
 	Category    categories.CategoryDAO `gorm:"foreignKey:CategoryID;references:ID"`
