@@ -6,3 +6,7 @@ type UserDAO struct {
 	basemodel.BaseModel
 	Username string `gorm:"column:username"`
 }
+
+func (UserDAO) TableName() string {
+	return "users"
+}

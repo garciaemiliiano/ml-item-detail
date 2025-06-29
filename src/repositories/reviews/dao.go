@@ -13,3 +13,7 @@ type ReviewDAO struct {
 	ProductID   uuid.UUID `gorm:"column:product_id"`
 	UserID      uuid.UUID `gorm:"column:user_id"`
 }
+
+func (ReviewDAO) TableName() string {
+	return "reviews"
+}

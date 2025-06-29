@@ -37,7 +37,8 @@ func (uc GetItemImpl) Execute(ctx context.Context, params GetItemParams) (itemEn
 		return itemEntity.Item{}, 0, err
 	}
 	item, count, err := uc.itemPersistor.List(ctx, itemProvider.ListConfig{
-		ID: params.ID,
+		ID:          params.ID,
+		WithDetails: true,
 	})
 	if err != nil {
 		return itemEntity.Item{}, 0, err

@@ -2,6 +2,7 @@ package items
 
 import (
 	entity "item-detail-api/src/core/entities/items"
+	"item-detail-api/src/core/utils"
 	"item-detail-api/src/repositories/basemodel"
 	"item-detail-api/src/repositories/products"
 	"item-detail-api/src/repositories/providers"
@@ -31,8 +32,9 @@ func (m ItemDAO) ToEntity() entity.Item {
 		ProviderID:   m.ProviderID,
 		SerialNumber: m.SerialNumber,
 		Stock:        m.Stock,
-		CreatedAt:    parseDateStr(m.CreatedAt),
-		UpdatedAt:    parseDateStr(m.UpdatedAt),
+		CreatedAt:    utils.ParseDateStr(m.CreatedAt),
+		UpdatedAt:    utils.ParseDateStr(m.UpdatedAt),
+		Product:      m.Product.ToEntity(),
 	}
 }
 

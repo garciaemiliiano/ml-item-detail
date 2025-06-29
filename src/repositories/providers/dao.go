@@ -6,3 +6,7 @@ type ProviderDAO struct {
 	basemodel.BaseModel
 	Name string `gorm:"column:name"`
 }
+
+func (ProviderDAO) TableName() string {
+	return "providers"
+}

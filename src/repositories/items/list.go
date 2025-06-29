@@ -36,6 +36,10 @@ func (r ItemRepository) List(ctx context.Context, config provider.ListConfig) ([
 		}
 	}
 
+	if config.WithDetails {
+		q = q.Preload("Product").Preload("Provider")
+	}
+
 	q = q.Limit(config.Limit).Offset(config.Offset)
 	if err := q.Debug().Find(&daos).Error; err != nil {
 		return []entity.Item{}, 0, err
