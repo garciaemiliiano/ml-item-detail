@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
@@ -9,3 +9,27 @@ services:
       - PORT=${GO_PORT}
       - SQLITE_PATH=${GO_SQLITE_PATH}
       - MS_NAME=${GO_MS_NAME}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - test_network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:5000
+
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+    networks:
+      - test_network
+
+networks:
+  test_network:
+    driver: bridge

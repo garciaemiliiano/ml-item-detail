@@ -22,7 +22,7 @@ export default function SellerInfo({ seller }: SellerInfoProps) {
           </div>
 
           <div>
-            <p className="font-medium text-blue-600">{seller.name}</p>
+            <p className="font-medium text-blue-600">{seller?.name}</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex items-center">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
