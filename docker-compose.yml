@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=${GO_PORT}
+      - SQLITE_PATH=${GO_SQLITE_PATH}
+      - MS_NAME=${GO_MS_NAME}
