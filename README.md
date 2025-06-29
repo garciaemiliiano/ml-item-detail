@@ -18,3 +18,7 @@ Este repositorio contiene el **backend** implementado en **Go**, y provee una AP
 
 
 
+docker-compose down --volumes --remove-orphans # remover los volumenes huerfanos
+docker-compose build --no-cache # esto para levantar los contenedores sin cache
+docker-compose up
+

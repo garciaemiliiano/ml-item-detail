@@ -19,19 +19,10 @@ import SimilarProducts from "./SimilarProducts";
 
 async function getProductDetail(productId: string) {
   try {
-    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
-
     const response = await fetch(
-      `http://backend:5000/items/${productId}`
-    );
-
-    console.log(response)
-    if (!response.ok) {
-      throw new Error("Failed to fetch product");
-    }
-
+      `${process.env.NEXT_PUBLIC_API_URL}/items/${productId}`
+    );   
     const data = (await response.json()).content;
-    console.log("Product data:", data);
     return {
       id: data.id,
       title: data.product.name,
