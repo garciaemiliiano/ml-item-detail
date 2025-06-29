@@ -8,10 +8,10 @@ import (
 )
 
 type GetItemRequest struct {
-	ID string `uri:"id" binding:"required"`
+	ID string `uri:"id" binding:"required,uuid"`
 }
 
-func (lr GetItemRequest) ToListConfig(ctx *gin.Context) usecase.GetItemParams {
+func (lr GetItemRequest) ToParams(ctx *gin.Context) usecase.GetItemParams {
 	id, err := uuid.Parse(lr.ID)
 	if err != nil {
 		id = uuid.Nil

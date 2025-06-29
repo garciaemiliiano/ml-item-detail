@@ -1,0 +1,30 @@
+name: Total test coverage
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  total-test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout caller repository 
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up environment
+        uses: actions/setup-go@v5
+        with:
+          cache: true
+      - name: Install dependencies
+        run: |
+          go mod tidy
+      - name: Run tests
+        run: |
+          go test ./src/... -coverprofile=coverage.out -covermode=atomic
+      - name: Check total test coverage
+        uses: vladopajic/go-test-coverage@v2
+        with:
+          profile: coverage.out
+          config: .github/config/total-test-coverage-config.yml
