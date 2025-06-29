@@ -35,6 +35,7 @@ func (m ItemDAO) ToEntity() entity.Item {
 		CreatedAt:    utils.ParseDateStr(m.CreatedAt),
 		UpdatedAt:    utils.ParseDateStr(m.UpdatedAt),
 		Product:      m.Product.ToEntity(),
+		Provider:     m.Provider.ToEntity(),
 	}
 }
 
