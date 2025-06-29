@@ -16,7 +16,7 @@ type GetItemParams struct {
 
 //go:generate mockery --all
 type GetItem interface {
-	Execute(ctx context.Context, config GetItemParams) (itemEntity.Item, int, error)
+	Execute(ctx context.Context, config GetItemParams) (itemEntity.Item, error)
 }
 type GetItemImpl struct {
 	logger        *zap.Logger
@@ -32,22 +32,22 @@ func NewGetItemImpl(
 	}
 }
 
-func (uc GetItemImpl) Execute(ctx context.Context, params GetItemParams) (itemEntity.Item, int, error) {
+func (uc GetItemImpl) Execute(ctx context.Context, params GetItemParams) (itemEntity.Item, error) {
 	if err := params.validate(); err != nil {
-		return itemEntity.Item{}, 0, err
+		return itemEntity.Item{}, err
 	}
-	item, count, err := uc.itemPersistor.List(ctx, itemProvider.ListConfig{
+	item, _, err := uc.itemPersistor.List(ctx, itemProvider.ListConfig{
 		ID:          params.ID,
 		WithDetails: true,
 	})
 	if err != nil {
-		return itemEntity.Item{}, 0, err
+		return itemEntity.Item{}, err
 	}
 	if len(item) == 0 {
-		return itemEntity.Item{}, 0, ErrItemNotFound
+		return itemEntity.Item{}, ErrItemNotFound
 	}
 
-	return item[0], count, nil
+	return item[0], nil
 }
 
 func (params GetItemParams) validate() error {

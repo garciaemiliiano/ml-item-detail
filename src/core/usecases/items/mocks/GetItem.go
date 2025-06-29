@@ -16,7 +16,7 @@ type GetItem struct {
 }
 
 // Execute provides a mock function with given fields: ctx, config
-func (_m *GetItem) Execute(ctx context.Context, config items.GetItemParams) (entitiesitems.Item, int, error) {
+func (_m *GetItem) Execute(ctx context.Context, config items.GetItemParams) (entitiesitems.Item, error) {
 	ret := _m.Called(ctx, config)
 
 	if len(ret) == 0 {
@@ -24,9 +24,8 @@ func (_m *GetItem) Execute(ctx context.Context, config items.GetItemParams) (ent
 	}
 
 	var r0 entitiesitems.Item
-	var r1 int
-	var r2 error
-	if rf, ok := ret.Get(0).(func(context.Context, items.GetItemParams) (entitiesitems.Item, int, error)); ok {
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, items.GetItemParams) (entitiesitems.Item, error)); ok {
 		return rf(ctx, config)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, items.GetItemParams) entitiesitems.Item); ok {
@@ -35,19 +34,13 @@ func (_m *GetItem) Execute(ctx context.Context, config items.GetItemParams) (ent
 		r0 = ret.Get(0).(entitiesitems.Item)
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, items.GetItemParams) int); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, items.GetItemParams) error); ok {
 		r1 = rf(ctx, config)
 	} else {
-		r1 = ret.Get(1).(int)
+		r1 = ret.Error(1)
 	}
 
-	if rf, ok := ret.Get(2).(func(context.Context, items.GetItemParams) error); ok {
-		r2 = rf(ctx, config)
-	} else {
-		r2 = ret.Error(2)
-	}
-
-	return r0, r1, r2
+	return r0, r1
 }
 
 // NewGetItem creates a new instance of GetItem. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
