@@ -4,6 +4,7 @@ import (
 	"item-detail-api/config"
 	"item-detail-api/packages/dbconn"
 	"item-detail-api/src/app/web"
+	"item-detail-api/src/core/seed"
 	"item-detail-api/src/infrastructure/dependencies"
 	"log"
 	"os"
@@ -36,6 +37,8 @@ func Start() {
 		sqlDB, _ := db.DB()
 		sqlDB.Close()
 	}()
+
+	seed.Seed(db, logger)
 
 	webHandlers := dependencies.Build(conf, logger, db)
 	web.StartWebServer(conf, webHandlers, logger, db)

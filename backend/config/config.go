@@ -20,6 +20,7 @@ type Config struct {
 	PORT        string
 	SQLITE_PATH string
 	MS_NAME     string
+	SEED        string
 }
 
 func newConfig() (*Config, error) {
@@ -31,6 +32,7 @@ func newConfig() (*Config, error) {
 		PORT:        GetEnv("PORT", "5000"),
 		SQLITE_PATH: GetEnv("SQLITE_PATH", ""),
 		MS_NAME:     GetEnv("MS_NAME", "ml-item-detail"),
+		SEED:        GetEnv("SEED", "false"),
 	}
 
 	return conf, nil
