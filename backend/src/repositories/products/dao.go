@@ -5,6 +5,7 @@ import (
 	"item-detail-api/src/core/utils"
 	"item-detail-api/src/repositories/basemodel"
 	"item-detail-api/src/repositories/categories"
+	"item-detail-api/src/repositories/reviews"
 
 	"github.com/google/uuid"
 )
@@ -17,6 +18,7 @@ type ProductDAO struct {
 	CategoryID  uuid.UUID              `gorm:"column:category_id"`
 	ImageURL    string                 `gorm:"column:image_url"`
 	Category    categories.CategoryDAO `gorm:"foreignKey:CategoryID;references:ID"`
+	Reviews     []reviews.ReviewDAO    `gorm:"foreignKey:ProductID;references:ID"`
 }
 
 func (ProductDAO) TableName() string {
@@ -34,5 +36,6 @@ func (m ProductDAO) ToEntity() products.Product {
 		CreatedAt:   utils.ParseDateStr(m.CreatedAt),
 		UpdatedAt:   utils.ParseDateStr(m.UpdatedAt),
 		Category:    m.Category.ToEntity(),
+		Reviews:     reviews.ToEntities(m.Reviews),
 	}
 }

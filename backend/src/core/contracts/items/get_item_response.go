@@ -5,6 +5,7 @@ import (
 	entity "item-detail-api/src/core/entities/items"
 	"item-detail-api/src/core/entities/products"
 	"item-detail-api/src/core/entities/providers"
+	"item-detail-api/src/core/entities/reviews"
 )
 
 type GetItemResponse struct {
@@ -28,6 +29,13 @@ type ProductResponse struct {
 	ImageURL    string           `json:"image_url"`
 	CategoryID  string           `json:"category_id"`
 	Category    CategoryResponse `json:"category"`
+	Reviews     []ReviewResponse `json:"reviews,omitempty"`
+}
+
+type ReviewResponse struct {
+	ID          string `json:"id"`
+	Description string `json:"description"`
+	Rating      int    `json:"rating"`
 }
 
 type ProviderResponse struct {
@@ -49,7 +57,24 @@ func toProductResponse(p products.Product) ProductResponse {
 		ImageURL:    p.ImageURL,
 		CategoryID:  p.CategoryID.String(),
 		Category:    toCategoryResponse(p.Category),
+		Reviews:     toReviewsResponse(p.Reviews),
 	}
+}
+
+func toReviewResponse(r reviews.Review) ReviewResponse {
+	return ReviewResponse{
+		ID:          r.ID.String(),
+		Description: r.Description,
+		Rating:      r.Rating,
+	}
+}
+
+func toReviewsResponse(rs []reviews.Review) []ReviewResponse {
+	reviewsResponse := make([]ReviewResponse, 0)
+	for _, r := range rs {
+		reviewsResponse = append(reviewsResponse, toReviewResponse(r))
+	}
+	return reviewsResponse
 }
 
 func toCategoryResponse(c categories.Category) CategoryResponse {

@@ -2,6 +2,7 @@ package products
 
 import (
 	"item-detail-api/src/core/entities/categories"
+	"item-detail-api/src/core/entities/reviews"
 	"time"
 
 	"github.com/google/uuid"
@@ -18,4 +19,5 @@ type Product struct {
 	ImageURL    string
 	CategoryID  uuid.UUID
 	Category    categories.Category
+	Reviews     []reviews.Review
 }

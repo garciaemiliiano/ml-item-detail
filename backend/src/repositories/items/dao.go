@@ -40,9 +40,9 @@ func (m ItemDAO) ToEntity() entity.Item {
 }
 
 func toEntities(daos []ItemDAO) []entity.Item {
-	entities := make([]entity.Item, len(daos))
-	for i, dao := range daos {
-		entities[i] = dao.ToEntity()
+	entities := make([]entity.Item, 0)
+	for _, dao := range daos {
+		entities = append(entities, dao.ToEntity())
 	}
 	return entities
 }
