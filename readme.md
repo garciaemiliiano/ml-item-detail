@@ -11,9 +11,9 @@ Se diseñó un diagrama de flujo de modelos para clarificar cómo se estructuran
 El backend expone dos endpoints principales:  
 - `items/:id` — requerido para el challenge, que devuelve el detalle de un ítem específico.  
 - `items/` — endpoint adicional que reutiliza el repositorio existente, permitiendo filtros como nombre y categoría para búsqueda y listado.
-Tambien se agrego por simple testeo un action para correr el linter, por si hay algunas cosas que se me escapan. 
-Se agregaron tests unitarios para cada repo, usecase, y entrypoint.
-Se agregaron las estructuras y relaciones. 
+
+Además, se incorporó un action para ejecutar el linter.
+Se implementaron tests unitarios para cada repositorio, usecase, entrypoint. También se definieron las estructuras de datos y sus relaciones correspondientes.
 
 ---
 
