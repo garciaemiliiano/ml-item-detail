@@ -13,7 +13,6 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImageGallery from "./ImageGallery";
 import SellerInfo from "./SellerInfo";
-import ProductSpecs from "./ProductSpecs";
 import ReviewsSection from "./ReviewsSection";
 import SimilarProducts from "./SimilarProducts";
 
@@ -21,8 +20,15 @@ async function getProductDetail(productId: string) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/items/${productId}`
-    );   
+    );
     const data = (await response.json()).content;
+    const rating = data.product.reviews.length
+      ? data.product.reviews.reduce(
+          (acc: any, r: { rating: any }) => acc + r.rating,
+          0
+        ) / data.product.reviews.length
+      : 0;
+    const reviewCount = data.product.reviews.length;
     return {
       id: data.id,
       title: data.product.name,
@@ -33,12 +39,19 @@ async function getProductDetail(productId: string) {
       inStock: data.stock > 0,
       fullWarranty: true,
       mercadoPago: true,
+      rating: rating,
       seller: {
         name: data.provider.name,
       },
       category: {
         name: data.product.category.name,
       },
+      reviewCount: reviewCount,
+      reviews: data.product.reviews.map((review: any) => ({
+        id: review.id,
+        rating: review.rating,
+        comment: review.description,
+      })),
     };
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -81,18 +94,18 @@ export default async function ProductDetailPage() {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    // className={`w-4 h-4 ${
-                    //   i < Math.floor(product.rating)
-                    //     ? "fill-yellow-400 text-yellow-400"
-                    //     : "text-gray-300"
-                    // }`}
+                    className={`w-4 h-4 ${
+                      i < Math.floor(product?.rating ?? 0)
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-gray-300"
+                    }`}
                   />
                 ))}
               </div>
-              {/* <span className="text-sm font-medium">{product.rating}</span>
+              <span className="text-sm font-medium">{product?.rating}</span>
               <span className="text-sm text-gray-600">
-                ({product.reviewCount} opiniones)
-              </span> */}
+                ({product?.reviewCount} opiniones)
+              </span>
             </div>
 
             <div className="space-y-2">
@@ -148,7 +161,7 @@ export default async function ProductDetailPage() {
               </Button>
             </div>
 
-            <SellerInfo seller={product?.seller.name} />
+            <SellerInfo seller={{ name: product?.seller.name }} />
           </div>
         </div>
 
@@ -179,20 +192,18 @@ export default async function ProductDetailPage() {
                 </CardContent>
               </Card>
             </TabsContent>
-
-            <TabsContent value="specs" className="mt-6">
-              <ProductSpecs />
-            </TabsContent>
-
             <TabsContent value="questions" className="mt-6"></TabsContent>
-
             <TabsContent value="reviews" className="mt-6">
-              {/* TODO <ReviewsSection
-                rating={product.rating}
-                reviewCount={product.reviewCount}
-              /> */}
+              <ReviewsSection
+                rating={product?.rating ?? 0}
+                reviewCount={product?.reviewCount}
+                reviews={product?.reviews}
+              />
             </TabsContent>
           </Tabs>
+        </div>
+        <div className="mt-12">
+          <SimilarProducts />
         </div>
       </div>
     </div>

@@ -6,15 +6,17 @@ import { Progress } from "@/components/ui/progress";
 interface ReviewsSectionProps {
   rating: number;
   reviewCount: number;
+  reviews?: {
+    id: string;
+    comment: string;
+    rating: number;
+  }[];
 }
-
-const reviews = [{}];
-
-const ratingDistribution = [{}];
 
 export default function ReviewsSection({
   rating,
   reviewCount,
+  reviews,
 }: ReviewsSectionProps) {
   return (
     <div className="space-y-6">
@@ -43,17 +45,14 @@ export default function ReviewsSection({
         </CardContent>
       </Card>
 
-      {/* 
-      TODO
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Opiniones de compradores</h3>
-        {reviews.map((review) => (
+        {reviews?.map((review) => (
           <Card key={review.id}>
             <CardContent className="p-4">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium">{review.user}</span>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
@@ -67,15 +66,13 @@ export default function ReviewsSection({
                       ))}
                     </div>
                   </div>
-                  <span className="text-sm text-gray-500">{review.date}</span>
                 </div>
-
                 <p className="text-gray-700">{review.comment}</p>
               </div>
             </CardContent>
           </Card>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
