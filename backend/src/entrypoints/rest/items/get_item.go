@@ -35,7 +35,7 @@ func (h GetItemHandler) Handle() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, rest.Errf(CodeInvalidRequest, description))
 			return
 		}
-		item, err := h.usecase.Execute(c, r.ToParams(c))
+		item, err := h.usecase.Execute(c, r.ToParams())
 		if err != nil {
 			var (
 				status        int

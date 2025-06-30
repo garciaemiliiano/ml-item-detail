@@ -38,10 +38,12 @@ var containersSet = wire.NewSet(
 var handlersSet = wire.NewSet(
 	itemHandler.NewWireGetItemHandler,
 	pingHandler.NewWirePingHandler,
+	itemHandler.NewWireListItemsHandler,
 )
 
 var usecasesSet = wire.NewSet(
 	itemUsecase.NewGetItemImpl,
+	itemUsecase.NewListItemsImpl,
 )
 
 var repositoriesSet = wire.NewSet(

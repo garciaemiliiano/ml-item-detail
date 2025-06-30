@@ -30,6 +30,17 @@ func (r ItemRepository) List(ctx context.Context, config provider.ListConfig) ([
 		q = q.Where("id = ?", config.ID)
 	}
 
+	if config.CategoryName != "" {
+		q = q.Joins("JOIN products ON products.id = items.product_id").
+			Joins("JOIN categories ON categories.id = products.category_id").
+			Where("categories.name like ?", config.CategoryName)
+	}
+
+	if config.ProductName != "" {
+		q = q.Joins("JOIN products ON products.id = items.product_id").
+			Where("products.name like ?", config.ProductName)
+	}
+
 	if config.Count {
 		if err := q.Count(&count).Error; err != nil {
 			return []entity.Item{}, 0, err

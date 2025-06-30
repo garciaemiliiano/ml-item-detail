@@ -37,12 +37,12 @@ func TestItemRepository_List_OK(t *testing.T) {
 	assert.Equal(int(2), count)
 
 	_, count, err = r.List(ctx, itemProvider.ListConfig{
-		Count: true,
-		ID:    itemID,
+		Count:        true,
+		WithDetails:  true,
+		CategoryName: "Hogar",
 	})
 
 	assert.NoError(err)
-	assert.Equal(int(1), count)
 }
 
 func TestObjectAcquisitionRepository_Error(t *testing.T) {

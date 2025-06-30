@@ -1,6 +1,6 @@
 # ml-item-detail
 
-Proyecto fullstack que implementa un detalle de producto inspirado en MercadoLibre.
+Proyecto que implementa un detalle de producto inspirado en MercadoLibre.
 
 El foco principal está en el backend, desarrollado en Go con SQLite como base de datos.  
 El entorno está preparado para ser **plug & play** mediante `docker-compose`.
@@ -10,7 +10,7 @@ Se diseñó un diagrama de flujo de modelos para clarificar cómo se estructuran
 
 El backend expone dos endpoints principales:  
 - `items/:id` — requerido para el challenge, que devuelve el detalle de un ítem específico.  
-- `items/` — endpoint adicional que reutiliza el repositorio existente, permitiendo filtros como nombre y categoría para búsqueda y listado.
+- `items/` — endpoint adicional que reutiliza el repositorio existente, permitiendo filtros como nombre y categoría para búsqueda y listado. Se encuentra fuera del scope del challenge pero se puede consultar utilizando curl.
 
 Además, se incorporó un action para ejecutar el linter.
 Se implementaron tests unitarios para cada repositorio, usecase, entrypoint. También se definieron las estructuras de datos y sus relaciones correspondientes.
@@ -41,6 +41,7 @@ Cómo funciona
 - Al levantar el contenedor, si SEED=true, se ejecuta el seeder:
     - Si es la primera ejecución, se insertan datos de prueba automáticamente.
     - En siguientes ejecuciones, se evita la duplicación de datos.
+- Luego de levantados los servicios. Se puede acceder desde http://localhost:3000
 
 📁 Estructura del proyecto
 ```bash

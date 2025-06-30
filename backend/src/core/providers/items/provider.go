@@ -8,11 +8,13 @@ import (
 )
 
 type ListConfig struct {
-	ID          uuid.UUID
-	Limit       int
-	Offset      int
-	Count       bool
-	WithDetails bool
+	ID           uuid.UUID
+	Limit        int
+	Offset       int
+	Count        bool
+	WithDetails  bool
+	CategoryName string
+	ProductName  string
 }
 
 //go:generate mockery --all

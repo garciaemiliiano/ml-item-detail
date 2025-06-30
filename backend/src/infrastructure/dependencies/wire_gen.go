@@ -25,7 +25,9 @@ func BuildWeb(conf *config.Config, logger *zap.Logger, db *gorm.DB) *WebHandlerC
 	itemRepository := items.NewItemRepository(db, logger)
 	getItemImpl := items2.NewGetItemImpl(logger, itemRepository)
 	getItemHandler := items3.NewWireGetItemHandler(logger, getItemImpl)
-	itemContainer := entrypoints.NewItemContainer(getItemHandler)
+	listItemsImpl := items2.NewListItemsImpl(logger, itemRepository)
+	listItemsHandler := items3.NewWireListItemsHandler(logger, listItemsImpl)
+	itemContainer := entrypoints.NewItemContainer(getItemHandler, listItemsHandler)
 	pingHandler := ping.NewWirePingHandler(logger)
 	pingContainer := entrypoints.NewPingContainer(pingHandler)
 	webHandlerContainer := &WebHandlerContainer{
@@ -39,8 +41,8 @@ func BuildWeb(conf *config.Config, logger *zap.Logger, db *gorm.DB) *WebHandlerC
 
 var containersSet = wire.NewSet(entrypoints.NewItemContainer, entrypoints.NewPingContainer)
 
-var handlersSet = wire.NewSet(items3.NewWireGetItemHandler, ping.NewWirePingHandler)
+var handlersSet = wire.NewSet(items3.NewWireGetItemHandler, ping.NewWirePingHandler, items3.NewWireListItemsHandler)
 
-var usecasesSet = wire.NewSet(items2.NewGetItemImpl)
+var usecasesSet = wire.NewSet(items2.NewGetItemImpl, items2.NewListItemsImpl)
 
 var repositoriesSet = wire.NewSet(items.NewItemRepository, wire.Bind(new(items4.ItemsPersistor), new(*items.ItemRepository)))
