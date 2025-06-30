@@ -84,7 +84,6 @@ ml-item-detail/
     |       |-- reviews
     |       `-- users
     |-- Dockerfile
-    |-- estructura.md
     |-- go.mod
     |-- go.sum
     `-- main.go
@@ -107,8 +106,7 @@ ml-item-detail/
 |   |-- tailwind.config.ts
 |   `-- tsconfig.json
 |-- docker-compose.yml
-|-- estructura.md
-`-- run.md
+`-- readme.md
 
 ```
 
